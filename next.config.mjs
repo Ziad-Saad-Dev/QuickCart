@@ -18,6 +18,12 @@ const nextConfig = {
     eslint: {
     ignoreDuringBuilds: true,
   },
+  webpack: (config) => {
+  config.ignoreWarnings = [
+    { module: /node_modules\/next/ },
+  ];
+  return config;
+},
 };
 
 
