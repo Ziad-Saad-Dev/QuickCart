@@ -2,17 +2,19 @@ import { Inngest } from "inngest";
 
 export const inngest = new Inngest({ id: "quickcart-next" });
 
-// ✅ Lazy imports (fixes Vercel build issues)
+// ✅ Lazy imports
 const getDB = async () => {
   const connectDB = (await import("./db")).default;
   const User = (await import("@/models/user")).default;
   return { connectDB, User };
 };
 
-// ✅ Create user
+// ✅ CREATE
 export const syncUserCreation = inngest.createFunction(
-  { id: "sync-user-from-clerk" },
-  { event: "clerk/user.created" },
+  {
+    id: "sync-user-from-clerk",
+    triggers: [{ event: "clerk/user.created" }], // ✅ FIXED
+  },
   async ({ event }) => {
     const { connectDB, User } = await getDB();
 
@@ -30,10 +32,12 @@ export const syncUserCreation = inngest.createFunction(
   }
 );
 
-// ✅ Update user
+// ✅ UPDATE
 export const syncUserUpdation = inngest.createFunction(
-  { id: "update-user-from-clerk" },
-  { event: "clerk/user.updated" },
+  {
+    id: "update-user-from-clerk",
+    triggers: [{ event: "clerk/user.updated" }], // ✅ FIXED
+  },
   async ({ event }) => {
     const { connectDB, User } = await getDB();
 
@@ -51,16 +55,18 @@ export const syncUserUpdation = inngest.createFunction(
   }
 );
 
-// ✅ Delete user
+// ✅ DELETE
 export const syncUserDeletion = inngest.createFunction(
-  { id: "delete-user-with-clerk" },
-  { event: "clerk/user.deleted" },
+  {
+    id: "delete-user-with-clerk",
+    triggers: [{ event: "clerk/user.deleted" }], // ✅ FIXED
+  },
   async ({ event }) => {
     const { connectDB, User } = await getDB();
 
     const { id } = event.data;
 
     await connectDB();
-    await User.findByIdAndDelete(id); // ✅ FIXED
+    await User.findByIdAndDelete(id);
   }
 );
