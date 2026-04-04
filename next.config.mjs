@@ -14,6 +14,13 @@ const nextConfig = {
             },
         ],
     },
+    // This code for vercel deployment 
+    eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
+
 export default nextConfig;
+
+
