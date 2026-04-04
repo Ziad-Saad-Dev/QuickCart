@@ -13,7 +13,7 @@ const getDB = async () => {
 export const syncUserCreation = inngest.createFunction(
   {
     id: "sync-user-from-clerk",
-    triggers: [{ event: "user.created" }], // ✅ FIXED
+    triggers: [{ event: "clerk/user.created" }], // ✅ FIXED
   },
   async ({ event }) => {
     const { connectDB, User } = await getDB();
@@ -36,7 +36,7 @@ export const syncUserCreation = inngest.createFunction(
 export const syncUserUpdation = inngest.createFunction(
   {
     id: "update-user-from-clerk",
-    triggers: [{ event: "user.updated" }], // ✅ FIXED
+    triggers: [{ event: "clerk/user.updated" }], // ✅ FIXED
   },
   async ({ event }) => {
     const { connectDB, User } = await getDB();
@@ -59,7 +59,7 @@ export const syncUserUpdation = inngest.createFunction(
 export const syncUserDeletion = inngest.createFunction(
   {
     id: "delete-user-with-clerk",
-    triggers: [{ event: "user.deleted" }], // ✅ FIXED
+    triggers: [{ event: "clerk/user.deleted" }], // ✅ FIXED
   },
   async ({ event }) => {
     const { connectDB, User } = await getDB();
